@@ -1,89 +1,132 @@
-#if status --is-login
+# Not sure we want this limitation? 
+# if status --is-login
 
-function g
-	 git $argv
-end
-
+# clean up joe editor backup files
+#
 function clean
 	 rm -i *~ .??*~
 end
 
+# find command shortcut, from antiquity
+#
 function f
-	 find . -name $argv -print
+    find . -name $argv -print
 end
 
-function fm
-	 fetchmail
-end
-
+# arguably nonessential; fish sorts backwards; improve if possible
+#
 function h
-	 history
+    history
 end
 
-function la
-	command ls -AcCFG $argv
-end
-
-function ll
-	 command ls -AcCFGhls $argv
-end
-
-function lr
-	 command ls -AcCFGhltr $argv
-end
-
+# General ls args
+# -A everything except . and ..
+# -c Uses last-modification-time for sorting -l or -t output
+#       see separate last-touched command below 
+# -C force multi-column output if possible
+# -F suffiexes: dir/ executable* link@ socket= whiteout% FIFO| 
+# (removed) -G forces colorized output to term; set with CLICOLOR var below
+#
 function ls
- command ls -AcCF $argv
+    command ls -AcCF $argv
 end
 
-function lt
-	 command ls -AcCFGhltr $argv
+# Redundant; handles typos and muscle memory faults from prior use
+#
+function la
+    command ls -AcCF $argv
 end
 
-function lu
+# Long listing
+# -h Uses Byte/KB/MB/TB/PB suffixes for filesize (base 2 calculations)
+# -l long format
+# -T
+function ll
+    command ls -AcCFhl $argv
+end
+
+# Reverse sort long list by time 
+# -t sort by lasy-modified time
+# -r reverse the sort; last modified at the bottom
+#
+function lr
+    command ls -AcCFhltr $argv
+end
+
+# Reverse sort long listing by increasing size
+#
+function filesize
+    command ls -AcCFlSr
+end
+
+# Long listing reverse-sorted by access time, bot modification time 
+#
+function last-touched
 	 command ls -AcCFGhlrtu $argv
 end
 
+# Ship nethack bones files to a central server and retrieve new ones
+#
 function bones
 	 hearse -c ~/.hearse --run-as-me
 end
 
+# most-used alias ever...
+#
 function m
-	 mutt
+    mutt
 end
 
+# typo defense and colorization
+# 
 function mkae
-	 make $argv
+    grc make $argv
+end
+
+# `more` == `less` plus typo defense
+# 
+function more
+    less $argv
 end
 
 function mroe
-	 less $argv
+    less $argv
 end
 
 function More
-	 less $argv
+    less $argv
 end
 
 function Mroe
-	 less $argv
+    less $argv
+end
+
+# Make grep and its aliases colorful
+#
+function grep
+    command grep -C2 --color=auto $argv
 end
 
 function grpe
-	 grep $argv
+    grep -C2 --color=auto $argv
 end
 
 function Grep
-	 grep $argv
+    grep -C2 --color=auto $argv
 end
 
 function Grpe
-	 grep $argv
+    grep -C2 --color=auto $argv
 end
 
+# a ps-grep shortcut
+#
 function pid
-	 ps auww | grep $argv
+	 ps auww | grep -C2 --color=auto $argv
 end
 
+# obvious...
+#
 function po
 	 popd
 end
@@ -92,11 +135,7 @@ function pu
 	 pushd
 end
 
-function tweet
-	 t update $argv
-end
-
-
+set -U CLICOLOR
 set -U PAGER /usr/bin/less
 set -U MAIL /var/mail/plord
 set -U EDITOR /usr/local/bin/joe
@@ -112,5 +151,7 @@ set -U RBENV_ROOT /Users/plord/.rbenv
 . (rbenv init - | psub)
 
 echo -n "Your Strategy is: " (strategy) ;
-#end
+
+# This is the end block for the commented if-login on line 2
+# end
 
