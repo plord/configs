@@ -101,28 +101,29 @@ function Mroe
     less $argv
 end
 
-# Make grep and its aliases colorful
+# Make grep and its aliases colorful, and add one line of context before 
+# and after
 #
 function grep
-    command grep -C2 --color=auto $argv
+    command grep -C1 --color=auto $argv
 end
 
 function grpe
-    grep -C2 --color=auto $argv
+    grep -C1 --color=auto $argv
 end
 
 function Grep
-    grep -C2 --color=auto $argv
+    grep -C1 --color=auto $argv
 end
 
 function Grpe
-    grep -C2 --color=auto $argv
+    grep -C1 --color=auto $argv
 end
 
-# a ps-grep shortcut
+# a ps-grep shortcut; no -C context, we want isolated output
 #
 function pid
-	 ps auww | grep -C2 --color=auto $argv
+	 ps axww | grep --color=auto $argv
 end
 
 # obvious...
@@ -135,16 +136,20 @@ function pu
 	 pushd
 end
 
-set -U CLICOLOR
-set -U PAGER /usr/bin/less
-set -U MAIL /var/mail/plord
-set -U EDITOR /usr/local/bin/joe
-set -U LESS -R
-set -U PATH /Users/plord/bin /Users/plord/.rbenv/bin /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
-set -U JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
-set -U MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
-set -U HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
-set -U RBENV_ROOT /Users/plord/.rbenv
+# Remember to -x export environment variables to child processes
+# -U universal doesn't do that, it just shares them between all windows
+# and across fish restarts.  This is non-obvious.
+#
+set -Ux CLICOLOR
+set -Ux PAGER /usr/bin/less
+set -Ux MAIL /var/mail/plord
+set -Ux EDITOR /usr/local/bin/joe
+set -Ux LESS -R
+set -Ux PATH /Users/plord/bin /Users/plord/.rbenv/bin /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
+set -Ux JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
+set -Ux MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
+set -Ux HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
+set -Ux RBENV_ROOT /Users/plord/.rbenv
 
 # User specific environment and startup programs
 
