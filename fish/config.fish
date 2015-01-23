@@ -20,11 +20,11 @@ function h
 end
 
 # General ls args
-# -A everything except . and ..
-# -c Uses last-modification-time for sorting -l or -t output
+# -A Always show everything except . and ..
+# -c Use last-modification-time for sorting -l or -t output
 #       see separate last-touched command below 
-# -C force multi-column output if possible
-# -F suffiexes: dir/ executable* link@ socket= whiteout% FIFO| 
+# -C Force multi-column output if possible
+# -F Add suffixes: dir/ executable* link@ socket= whiteout% FIFO| 
 # (removed) -G forces colorized output to term; set with CLICOLOR var below
 #
 function ls
@@ -40,13 +40,13 @@ end
 # Long listing
 # -h Uses Byte/KB/MB/TB/PB suffixes for filesize (base 2 calculations)
 # -l long format
-# -T
+# -T (not used) Show ridiculous level of timestamp detail
 function ll
     command ls -AcCFhl $argv
 end
 
 # Reverse sort long list by time 
-# -t sort by lasy-modified time
+# -t sort by last-modified time
 # -r reverse the sort; last modified at the bottom
 #
 function lr
@@ -56,10 +56,10 @@ end
 # Reverse sort long listing by increasing size
 #
 function filesize
-    command ls -AcCFlSr
+    command ls -AcCFlSr $argv
 end
 
-# Long listing reverse-sorted by access time, bot modification time 
+# Reverse sort long list by access time (not modification time)
 #
 function last-touched
 	 command ls -AcCFGhlrtu $argv
@@ -140,23 +140,78 @@ end
 # -U universal doesn't do that, it just shares them between all windows
 # and across fish restarts.  This is non-obvious.
 #
-set -Ux CLICOLOR
+set -Ux CLICOLOR auto
 set -Ux PAGER /usr/bin/less
 set -Ux MAIL /var/mail/plord
 set -Ux EDITOR /usr/local/bin/joe
 set -Ux LESS -R
-set -Ux PATH /Users/plord/bin /Users/plord/.rbenv/bin /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
+set -Ux PATH /Users/plord/bin /Users/plord/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
 set -Ux JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 set -Ux MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
 set -Ux HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
 set -Ux RBENV_ROOT /Users/plord/.rbenv
 
 # User specific environment and startup programs
+# rbenv init doesn't work so well in fish; 
+# picked up a new function from Lukasz Niemier on coderwall
+# . (rbenv init - | psub)
 
-. (rbenv init - | psub)
 
+function rbenv_shell
+    set -l vers $argv[1]
+  
+    switch "$vers"
+        case '--complete'
+            echo '--unset'
+            echo 'system'
+            command rbenv versions --bare
+            return
+        case '--unset'
+            set -e RBENV_VERSION
+            return 1
+        case ''
+            if [ -z "$RBENV_VERSION" ]
+                echo "rbenv: no shell-specific version configured" >&2
+                return 1
+            else
+                echo "$RBENV_VERSION"
+                return
+            end
+        case '*'
+            rbenv prefix "$vers" > /dev/null
+            set -gx -RBENV_VERSION -"$vers"
+    end
+end
+
+function rbenv_lookup
+    set -l -vers (command rbenv versions bare| sort | grep "$argv[1]" | tail n1)
+    
+    if [ ! -z "$vers" ]
+        echo $vers
+        return
+    else
+        echo $argv
+        return
+    end
+end
+
+function rbenv
+    set -l command $argv[1]
+    [ (count $argv) -gt 1 ]; and set -l args $argv[2..-1]
+    
+    
+    switch "$command"
+        case shell
+            rbenv_shell (rbenv_lookup $args)
+        case local global
+            command rbenv $command (rbenv_lookup $args)
+        case '*'
+            command rbenv $command $args
+    end
+end
+
+# Spit out an oblique strategy
 echo -n "Your Strategy is: " (strategy) ;
 
 # This is the end block for the commented if-login on line 2
-# end
-
+ end
