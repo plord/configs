@@ -1,0 +1,309 @@
+#
+# Nethack configuration file.
+#
+# Naming this file $(HOME)/.nethackrc (for UNIX) or setting the environment
+# variable NETHACKOPTIONS to point to its full path name elsewhere tells
+# NetHack to use X11 windowing and fonts (provided the executable was
+# compiled with that ability).
+#
+#
+OPTIONS=!cmdassist
+OPTIONS=!help
+OPTIONS=!legacy
+OPTIONS=!lootabc
+OPTIONS=!news
+OPTIONS=!prayconfirm
+OPTIONS=!rest_on_space
+OPTIONS=!sparkle
+#OPTIONS=DECgraphics
+OPTIONS=MacGraphics
+#OPTIONS=Race:elf
+#OPTIONS=align:chaotic
+OPTIONS=autodig
+OPTIONS=autopickup
+OPTIONS=boulder:0
+OPTIONS=catname:pixel
+OPTIONS=color
+OPTIONS=confirm
+OPTIONS=disclose:+iagcv
+OPTIONS=dogname:phydeaux
+OPTIONS=fruit:bag of dicks
+OPTIONS=hilite_pet
+OPTIONS=lit_corridor
+OPTIONS=msg_window:reverse
+OPTIONS=msghistory:1000
+OPTIONS=number_pad
+OPTIONS=pickup_burden:unencumbered
+OPTIONS=pickup_types:$"!?/+=
+OPTIONS=runmode:teleport
+OPTIONS=safe_pet
+OPTIONS=scores:10 top/3 around/own
+OPTIONS=showexp
+OPTIONS=showrace
+OPTIONS=sortpack
+OPTIONS=time
+OPTIONS=tombstone
+OPTIONS=verbose
+OPTIONS=windowtype:tty
+
+# turn ghosts and shades into 'X' - great with telepathy for bones detection
+OPTIONS=monsters:abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ@X'&;:~]
+
+# stuff not in vanilla follows
+# OPTIONS=showscore
+# OPTIONS=sortloot:full
+# OPTIONS=showborn
+# OPTIONS=use_darkgray
+# OPTIONS=paranoid_remove
+
+# interhack does this for me
+#OPTIONS=!hp_monitor
+
+# I encourage people to use my menucolors! It's why I have a version and date.
+
+# eidocolors 1.11.0, 13:09 21 Mar 08
+# last minor:     compatibility with the new nethack.alt.org's GNU (not POSIX)
+#                   regex library
+
+OPTIONS=menucolors
+
+#########
+# B/U/C #
+#########
+#MENUCOLOR="^[a-zA-Z$] - "=white #may want to enable this if regularly playing priest.. (priests don't see the 'uncursed')
+MENUCOLOR=" !C"=white
+MENUCOLOR=" !B"=white
+MENUCOLOR=" !UC"=white
+MENUCOLOR=" uncursed| UC?($| )"=white
+MENUCOLOR=" \([-0-9]+:[-0-9]+\)"=white #nethack doesn't display "uncursed" if charges are known
+MENUCOLOR=" [+-][0-9]"=white
+
+MENUCOLOR=" blessed| B($| )"=cyan
+MENUCOLOR=" cursed| C($| )"=red
+################
+# WATER SPORTS #
+################
+MENUCOLOR=" holy water"=cyan&bold
+MENUCOLOR=" blessed clear potion"=cyan&bold
+MENUCOLOR=" blessed potions? called water"=cyan&bold
+MENUCOLOR=" clear potions? named (holy|blessed|B)($| )"=cyan&bold
+MENUCOLOR=" potions? of water named (holy|blessed|B)($| )"=cyan&bold
+MENUCOLOR=" potions? called water named (holy|blessed|B)($| )"=cyan&bold
+MENUCOLOR=" unholy water"=orange
+MENUCOLOR=" cursed clear potion"=orange
+MENUCOLOR=" cursed potions? called water"=orange
+MENUCOLOR=" potions? called water named (unholy|cursed|C)($| )"=orange
+
+#################
+# FOOD CONDUCTS # thanks, teabing!
+#################
+# vegan
+MENUCOLOR="(food |cram |K-|C-)ration|gunyoki"=green&bold
+MENUCOLOR="lembas wafer|melon|carrot|tin .* spinach"=green&bold
+MENUCOLOR=" oranges?( named.*)?$"=green&bold # avoid coloring orange DSM
+MENUCOLOR=" pears?( named.*)?$"=green&bold # avoid coloring pearl rings
+MENUCOLOR=" apple|banana|kelp|eucalyptus|garlic|wolfsbane"=green&bold
+MENUCOLOR=" slime mold| bag of dicks "=green&bold  ## YOUR FRUIT HERE
+MENUCOLOR="(tin of )?(gelatinous cube|acid blob|quivering blob)( corpse)?"=green&bold
+MENUCOLOR="(tin of )?(blue|spotted|ochre) jelly( corpse)?"=green&bold
+MENUCOLOR="(tin of )?lichen|shrieker|violet fungus|(brown|yellow|green|red) mold( corpse)?"=green&bold
+
+# vegetarian
+MENUCOLOR="egg|pancake|fortune cookie|candy bar|royal jelly|cream pie|candle"=green
+MENUCOLOR="(tin of )?brown pudding|gray ooze( corpse)?"=green
+
+###########
+# GOODIES #
+###########
+MENUCOLOR=" bag .* holding"=magenta
+MENUCOLOR=" luck(stone)?($| )"=magenta
+MENUCOLOR=" wand .* wish(ing)?($| )"= magenta
+MENUCOLOR=" magic marker"=magenta
+MENUCOLOR=" magic lamp|lamp .* magic"=magenta
+MENUCOLOR=" unicorn horn[^[]*$"=magenta #this doesn't color the #enhance unicorn horn skill
+MENUCOLOR=" tinning kit"=magenta
+MENUCOLOR=" ring .* regen(eration)?($| )"=magenta
+MENUCOLOR=" ring .* conflict"=magenta
+MENUCOLOR=" ring .* (FA|free action)($| )"=magenta
+MENUCOLOR=" ring .* (TC|teleport control)($| )"=magenta
+MENUCOLOR=" ring .* lev(itation)?($| )"=magenta
+MENUCOLOR=" amulet .* (life ?saving|LS)($| )"=magenta
+MENUCOLOR=" amulet .* ref(lection)?($| )"=magenta
+MENUCOLOR=" c(o|hi)ckatrice (corpse|egg)"=magenta
+MENUCOLOR=" egg .* cockatrice"=magenta
+MENUCOLOR=" stethoscope"=magenta
+
+#instruments
+MENUCOLOR="tooled horn|fire horn|frost horn|horn .* (tooled|fire|frost)"=magenta
+MENUCOLOR=" harp"=magenta
+MENUCOLOR=" bugle"=magenta
+MENUCOLOR=" flute"=magenta
+
+#############
+# ARTIFACTS #
+#############
+#unaligned
+MENUCOLOR=" (Dragonbane|Fire Brand|Frost Brand|Ogresmasher|Trollsbane|Werebane)"=lightgreen
+
+#lawful normal, quest
+MENUCOLOR=" (Demonbane|Excalibur|Grayswandir|Snickersnee|Sunsword)"=lightgreen
+MENUCOLOR=" (Orb of Detection|Sceptre of Might|Magic Mirror of Merlin|Mitre of Holiness|Tsurugi of Muramasa)"=lightgreen
+
+#neutral normal, quest
+MENUCOLOR=" (Cleaver|Giantslayer|Magicbane|Mjollnir|Vorpal Blade)"=lightgreen
+MENUCOLOR=" (Heart of Ahriman|Staff of Aesculapius|Eyes of the Overworld|Platinum Yendorian Express Card|Orb of Fate|Eye of the Aethiopica)"=lightgreen
+
+#chaotic normal, quest
+MENUCOLOR=" (Grimtooth|Orcrist|Sting|Stormbringer)"=lightgreen
+MENUCOLOR=" (Longbow of Diana|Master Key of Thievery)"=lightgreen
+
+#invocation items
+MENUCOLOR=" (Bell of Opening|silver bell|Candelabrum of Invocation|candelabrum|Book of the Dead|papyrus spellbook)"=magenta&bold
+
+#raison d'etre
+MENUCOLOR=" Amulet of Yendor named"=magenta&bold&underline
+
+##################
+# CURSED GOODIES #
+##################
+MENUCOLOR=" cursed.* bag .* holding"=red&bold
+MENUCOLOR=" cursed.* luck(stone)?($| )"=red&bold
+MENUCOLOR=" cursed.* unicorn horn"=red&bold
+MENUCOLOR=" cursed.* (Bell of Opening|silver bell|Candelabrum of Invocation|candelabrum|Book of the Dead|papyrus spellbook)"=red&bold
+
+
+#############
+# BAD STUFF #
+#############
+MENUCOLOR=" load(stone)?($| )"=red&underline
+
+##############################
+# WATCH OUT, BAG OF HOLDING! #
+##############################
+MENUCOLOR=" bag .* tricks"=blue&underline
+MENUCOLOR=" wand .*[^!]canc"=blue&underline
+MENUCOLOR=" wand .* vanish"=blue
+
+################
+# SHINY THINGS #
+################
+MENUCOLOR=" gold piece"=yellow
+MENUCOLOR=" valuable"=brown
+MENUCOLOR=" gems? .* hard"=yellow
+
+#soft gems
+MENUCOLOR=" ([0-9]+|an?|gems? .*) (uncursed |cursed |blessed )?(dilithium|opal|garnet|jasper|agate|jet|obsidian|jade|citrine|chrysoberyl|amber|amethyst|fluorite|turquoise)(e?s)?( stones?| gems?| cry
+
+#hard gems
+MENUCOLOR=" ([0-9]+|an?|gems?.*) (uncursed |cursed |blessed )?(diamond|rub(y|ies)|jacinth|sapphire|black opal|emerald|topaz|aquamarine)(e?s)?( stones?| gems?)?( named .*)?$"=yellow
+
+#######################
+# SPELL FAILURE RATES #
+#######################
+MENUCOLOR=" 0%"=white
+MENUCOLOR=" [1-9]%"=cyan
+MENUCOLOR=" [12][0-9]%"=cyan
+MENUCOLOR=" [3-6][0-9]%"=yellow
+MENUCOLOR=" 7[0-5]%"=yellow
+MENUCOLOR=" 7[6-9]%"=orange
+MENUCOLOR=" 8[0-9]%"=orange
+MENUCOLOR=" 9[0-9]%"=red
+MENUCOLOR=" 100%"=red
+
+###################
+# FORGOTTEN SPELL # thanks, Stevie
+###################
+MENUCOLOR="[a-zA-Z] - [a-zA-Z ]+ [0-9]\*   [a-z]+ +[0-9]+%"=magenta
+
+
+
+############
+# #ENHANCE # thanks itsblah
+############
+MENUCOLOR="^ +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=none           # normal
+MENUCOLOR="^ *[a-z] - +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=white # ready to enhance
+MENUCOLOR="^ +\* +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=white      # enhanceable if more skill slots
+MENUCOLOR="^ +# +[a-z -]+ +\[(Unskilled|Basic|Skilled|Expert|Master|Grand Master)\]$"=none        # enhanceable if more potential
+
+################
+# FORCE COLORS #
+################
+# Some of these are subject to change !
+
+MENUCOLOR="\{R\}"=red
+MENUCOLOR="\{B\}"=blue
+MENUCOLOR="\{C\}"=cyan
+MENUCOLOR="\{G\}"=green
+MENUCOLOR="\{Y\}"=yellow
+MENUCOLOR="\{[MP]\}"=magenta
+MENUCOLOR="\{O\}"=orange
+MENUCOLOR="\{W\}"=white
+MENUCOLOR="\{L\}"=black
+MENUCOLOR="\{y\}"=gray
+MENUCOLOR="\{g\}"=lightgreen
+MENUCOLOR="\{b\}"=lightblue
+MENUCOLOR="\{[mp]\}"=lightmagenta
+MENUCOLOR="\{c\}"=lightcyan
+MENUCOLOR="\{N\}"=none
+MENUCOLOR="\{X\}"=bold
+MENUCOLOR="\{x\}"=dim
+MENUCOLOR="\{U\}"=underline
+MENUCOLOR="\{I\}"=inverse
+MENUCOLOR="\{K\}"=blink
+
+########################
+# LOOT/APPLY CONTAINER #
+########################
+MENUCOLOR=" is empty. Do what?"=none
+MENUCOLOR="Put something into .*"=none
+MENUCOLOR="Take something out of .*"=none
+
+
+
+#
+# There are 17 object symbols and 69 graphics symbols.
+# The descriptions of these symbols can be found in dat/opthelp.
+#
+#
+#Font: nh10 (10x20)
+#
+#OBJECTS= 180 183 188 192 181 184 182 189 190 196 \
+#	 191 194 193 187 185 186 195
+#
+#GRAPHICS= 032 025 018 013 012 014 011 015 023 024 \
+#	  022 021 128 129 130 131 132 133 134 135 \
+#	  136 137 145 146 138 139 144 143 142 141 \
+#	  140 149 150 031 031 147 148 031 161 140 \
+#	  151 152 153 154 155 156 157 158	  \
+#	  159 160 161 162			  \
+#	  163 164 165 166 167 168 169 170	  \
+#	  171 172 173 174 175 176 177 178 179
+##
+#
+# Font: ibm (8x14)
+#
+#OBJECTS= 207 210 215 219 208 211 209 216 217 223 \
+#	 218 221 220 214 212 213 222
+#
+#GRAPHICS= 032 128 129 130 131 132 133 134 135 136 \
+#	  137 138 139 045 124 142 143 144 145 146 \
+#	  147 148 155 156 149 150 227 154 153 152 \
+#	  151 159 160 200 200 157 158 250 170 151 \
+#	  161 162 163 164 165 166 167 168	  \
+#	  169 170 171 172			  \
+#	  173 174 175 176 177 178 179 180	  \
+#	  181 182 183 184 185 186 187 188 189
+#
+#
+# Font: a "standard" font like 6x13
+#
+#GRAPHICS = 032 025 018 013 012 014 011 015 023 024 \
+#	   022 021 031 045 124 043 043 031 035 001 \
+#	   060 062 060 062 094 002 019 092 035 123 \
+#	   125 031 125 046 046 035 035 046 127 125 \
+#	   124 045 092 047 042 033 041 040	   \
+#	   048 035 064 042			   \
+#	   047 045 092 124 124 092 045 047         \
+#	   047 064 092 064 064 064 092 064 047
+#
+#
