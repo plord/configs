@@ -151,6 +151,7 @@ set -Ux MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
 set -Ux HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
 set -Ux RBENV_ROOT /Users/plord/.rbenv
 set -Ux PYENV_ROOT /Users/plord/.pyenv
+set -Ux PYENV_SHELL fish
 
 # User specific environment and startup programs
 # rbenv init doesn't work so well in fish; 
