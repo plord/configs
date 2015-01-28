@@ -145,11 +145,12 @@ set -Ux PAGER /usr/bin/less
 set -Ux MAIL /var/mail/plord
 set -Ux EDITOR /usr/local/bin/joe
 set -Ux LESS -R
-set -Ux PATH /Users/plord/bin /Users/plord/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
+set -Ux PATH /Users/plord/bin /Users/plord/.pyenv/shims /Users/plord/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
 set -Ux JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 set -Ux MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
 set -Ux HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
 set -Ux RBENV_ROOT /Users/plord/.rbenv
+set -Ux PYENV_ROOT /Users/plord/.pyenv
 
 # User specific environment and startup programs
 # rbenv init doesn't work so well in fish; 
@@ -209,6 +210,8 @@ function rbenv
             command rbenv $command $args
     end
 end
+
+
 
 # Spit out an oblique strategy
 echo -n "Your Strategy is: " (strategy) ;
