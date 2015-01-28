@@ -1,7 +1,16 @@
-# Not sure we want this limitation? 
-# if status --is-login
+### Fish shell config
+### Contributions from Lukasz Niemier & Justin Mayer
+###
 
-# clean up joe editor backup files
+if status --is-interactive
+
+## Short function definitions 
+## replaces the alias command in other shells
+##
+## functions can use `command` to alter the behavior of a specific command 
+## functions allow you to call $argv in mid (see `f` for a trivial example)
+
+# clean up editor backup files
 #
 function clean
 	 rm -i *~ .??*~
@@ -19,13 +28,13 @@ function h
     history
 end
 
-# General ls args
-# -A Always show everything except . and ..
-# -c Use last-modification-time for sorting -l or -t output
-#       see separate last-touched command below 
-# -C Force multi-column output if possible
-# -F Add suffixes: dir/ executable* link@ socket= whiteout% FIFO| 
-# (removed) -G forces colorized output to term; set with CLICOLOR var below
+## General ls args
+## -A Always show everything except . and ..
+## -c Use last-modification-time for sorting -l or -t output
+##       see separate last-touched command below 
+## -C Force multi-column output if possible
+## -F Add suffixes: dir/ executable* link@ socket= whiteout% FIFO| 
+## (removed) -G forces colorized output to term; set with CLICOLOR var below
 #
 function ls
     command ls -AcCF $argv
@@ -40,7 +49,7 @@ end
 # Long listing
 # -h Uses Byte/KB/MB/TB/PB suffixes for filesize (base 2 calculations)
 # -l long format
-# -T (not used) Show ridiculous level of timestamp detail
+#
 function ll
     command ls -AcCFhl $argv
 end
@@ -67,8 +76,8 @@ end
 
 # Ship nethack bones files to a central server and retrieve new ones
 #
-function bones
-	 hearse -c ~/.hearse --run-as-me
+function hearse
+	 command hearse -c ~/.hearse --run-as-me
 end
 
 # most-used alias ever...
@@ -77,29 +86,17 @@ function m
     mutt
 end
 
-# typo defense and colorization
-# 
-function mkae
-    grc make $argv
-end
+## typo defense
+## make colorization moved to grc functions
+## 
+alias mkae make
+alias Make make
+alias Mkae make
 
-# `more` == `less` plus typo defense
-# 
-function more
-    less $argv
-end
-
-function mroe
-    less $argv
-end
-
-function More
-    less $argv
-end
-
-function Mroe
-    less $argv
-end
+alias more less
+alias mroe less
+alias More less
+alias Mroe less
 
 # Make grep and its aliases colorful, and add one line of context before 
 # and after
@@ -136,86 +133,46 @@ function pu
 	 pushd
 end
 
-# Remember to -x export environment variables to child processes
-# -U universal doesn't do that, it just shares them between all windows
-# and across fish restarts.  This is non-obvious.
+
+## Remember to -x export environment variables to child processes
+## -U universal doesn't do that, it just shares them between all windows
+## and across fish restarts.  This is non-obvious.
+##
+## Curiously the -g seems to work where -U does not?
+## 
+
+set -gx CLICOLOR auto
+set -gx PAGER /usr/bin/less
+set -gx MAIL /var/mail/plord
+set -gx EDITOR /usr/local/bin/joe
+set -gx LESS -R
+set -gx PATH /Users/plord/.nodenv/bin /Users/plord/bin /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
+set -gx JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
+set -gx MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
+set -gx HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
+set -gx RBENV_ROOT /Users/plord/.rbenv
+set -Ugx PYENV_ROOT /Users/plord/.pyenv
+set -Ugx PYENV_SHELL fish
+
+## User specific environment and startup programs
+
+# picked up a new fish-specific rbenv functions from Lukasz Niemier on 
+# coderwall; moved to functions directory
+
+## all your env are belong to us
+## pyenv suggests the longer form below.
 #
-set -Ux CLICOLOR auto
-set -Ux PAGER /usr/bin/less
-set -Ux MAIL /var/mail/plord
-set -Ux EDITOR /usr/local/bin/joe
-set -Ux LESS -R
-set -Ux PATH /Users/plord/bin /Users/plord/.pyenv/shims /Users/plord/.rbenv/shims /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
-set -Ux JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
-set -Ux MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
-set -Ux HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
-set -Ux RBENV_ROOT /Users/plord/.rbenv
-set -Ux PYENV_ROOT /Users/plord/.pyenv
-set -Ux PYENV_SHELL fish
+status --is-interactive; and . (rbenv init -|psub)
+rbenv version
 
-# User specific environment and startup programs
-# rbenv init doesn't work so well in fish; 
-# picked up a new function from Lukasz Niemier on coderwall
-# . (rbenv init - | psub)
+status --is-interactive; and . (pyenv init -|psub)
+pyenv version
 
-
-function rbenv_shell
-    set -l vers $argv[1]
-  
-    switch "$vers"
-        case '--complete'
-            echo '--unset'
-            echo 'system'
-            command rbenv versions --bare
-            return
-        case '--unset'
-            set -e RBENV_VERSION
-            return 1
-        case ''
-            if [ -z "$RBENV_VERSION" ]
-                echo "rbenv: no shell-specific version configured" >&2
-                return 1
-            else
-                echo "$RBENV_VERSION"
-                return
-            end
-        case '*'
-            rbenv prefix "$vers" > /dev/null
-            set -gx -RBENV_VERSION -"$vers"
-    end
-end
-
-function rbenv_lookup
-    set -l -vers (command rbenv versions bare| sort | grep "$argv[1]" | tail n1)
-    
-    if [ ! -z "$vers" ]
-        echo $vers
-        return
-    else
-        echo $argv
-        return
-    end
-end
-
-function rbenv
-    set -l command $argv[1]
-    [ (count $argv) -gt 1 ]; and set -l args $argv[2..-1]
-    
-    
-    switch "$command"
-        case shell
-            rbenv_shell (rbenv_lookup $args)
-        case local global
-            command rbenv $command (rbenv_lookup $args)
-        case '*'
-            command rbenv $command $args
-    end
-end
-
-
+status --is-interactive; and . (nodenv init -|psub)
+nodenv version
 
 # Spit out an oblique strategy
 echo -n "Your Strategy is: " (strategy) ;
 
 # This is the end block for the commented if-login on line 2
-# end
+end

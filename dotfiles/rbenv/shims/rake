@@ -18,4 +18,4 @@ if [ "$program" = "ruby" ]; then
 fi
 
 export RBENV_ROOT="/Users/plord/.rbenv"
-exec "/usr/local/bin/rbenv" exec "$program" "$@"
+exec "/usr/local/Cellar/rbenv/HEAD/libexec/rbenv" exec "$program" "$@"
