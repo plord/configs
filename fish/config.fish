@@ -117,6 +117,11 @@ function Grpe
     grep -C1 --color=auto $argv
 end
 
+# same for tree
+function tree
+    command tree -C $argv
+end
+
 # a ps-grep shortcut; no -C context, we want isolated output
 #
 function pid
