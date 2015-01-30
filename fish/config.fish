@@ -138,7 +138,6 @@ function pu
 	 pushd
 end
 
-
 ## Remember to -x export environment variables to child processes
 ## -U universal doesn't do that, it just shares them between all windows
 ## and across fish restarts.  This is non-obvious.
@@ -165,16 +164,16 @@ set -Ugx PYENV_SHELL fish
 # coderwall; moved to functions directory
 
 ## all your env are belong to us
-## pyenv suggests the longer form below.
+## pyenv docs suggests the longer init command format below.
 #
 status --is-interactive; and . (rbenv init -|psub)
-rbenv version
+echo "Ruby:" (rbenv version);
 
 status --is-interactive; and . (pyenv init -|psub)
-pyenv version
+echo "Python:" (pyenv version);
 
 status --is-interactive; and . (nodenv init -|psub)
-nodenv version
+echo "Node:" (nodenv version); echo -e \n
 
 # Spit out an oblique strategy
 echo -n "Your Strategy is: " (strategy) ;
