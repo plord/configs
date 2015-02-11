@@ -153,7 +153,6 @@ set -gx LESS -R
 set -gx PATH /Users/plord/.nodenv/bin /Users/plord/bin /usr/local/bin /usr/local/sbin /usr/bin /bin /usr/sbin /sbin /opt/X11/bin /usr/texbin
 set -gx JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJDK/Home
 set -gx MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
-set -gx HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
 set -gx RBENV_ROOT /Users/plord/.rbenv
 set -gx PYENV_ROOT /Users/plord/.pyenv
 set -gx PYENV_SHELL fish
