@@ -155,8 +155,9 @@ set -gx JAVA_HOME /System/Library/Frameworks/JavaVM.framework/Versions/CurrentJD
 set -gx MUTTALIAS_FILES /Users/plord/.mutt/mail_aliases
 set -gx HOMEBREW_GITHUB_API_TOKEN 9bc3959095ac5ca2598d45f0a5b8fe95c03b45de
 set -gx RBENV_ROOT /Users/plord/.rbenv
-set -Ugx PYENV_ROOT /Users/plord/.pyenv
-set -Ugx PYENV_SHELL fish
+set -gx PYENV_ROOT /Users/plord/.pyenv
+set -gx PYENV_SHELL fish
+set -gx GOPATH /Users/plord/Projects/go
 
 ## User specific environment and startup programs
 
